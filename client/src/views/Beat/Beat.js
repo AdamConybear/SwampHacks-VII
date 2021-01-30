@@ -1,19 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef } from "react";
 import { Redirect } from "react-router-dom";
 import Countdown from "react-countdown";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import ReactAudioPlayer from "react-audio-player";
+import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/Remove';
+// import ReactAudioPlayer from "react-audio-player";
 import test from "../../assets/guitarSample.wav";
 import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 import "./Beat.css";
+
+
 
 const Beat = () => {
     const [showFirstBeat, setShowFirstBeat] = useState(false);
 	const [showSecondBeat, setShowSecondBeat] = useState(false);
 	const [firstBeat, setFirstBeat] = useState("");
 	const [secondBeat, setSecondBeat] = useState("");
-	const [choosenBeat, setChoosenBeat] = useState("");
+    const [choosenBeat, setChoosenBeat] = useState("");
+    const [beatIsChoosen, setBeatIsChoosen] = useState(false);
+    
+    const player = useRef();
 
 	useEffect(() => {
 		//get round from database
@@ -40,19 +47,34 @@ const Beat = () => {
 				</span>
 			);
 		}
-	};
+    };
+    
+    const handleAddSample = () => {
+        console.log("added beat");
+        console.log(player.current.audio.current.src);
+        setChoosenBeat(player.current.audio.current.src);
+        setBeatIsChoosen(true);
 
+    }
+    
+    const handleRemoveSample = () => {
+        console.log("removed beat");
+        setBeatIsChoosen(false);
+        setChoosenBeat("");
+    }
+        
 	const renderBeats = () => {
 		return (
 			<div style={{ display: "flex", flexDirection: "row" }}>
 				<AudioPlayer
-					src={test}
+                    src={test}
+                    ref = {player}
 					showJumpControls={false}
 					loop={true}
 					// style={{
 					// 	width: "300px",
 					// }}
-					customVolumeControls={[<button>add sample</button>]}
+					customVolumeControls={[<AddIcon onClick={handleAddSample} style={{fontSize:'30px', cursor: 'pointer', color:'grey'}}/>]}
 				/>
 			</div>
 		);
@@ -67,7 +89,19 @@ const Beat = () => {
 				</div>
 			</div>
 			<div className="beat-instr">Select one beat to be voted on in the next round</div>
-			<div className="beat-added">Current Beat added:</div>
+			<div className="beat-added">
+                <span>Current Beat added:</span>
+                {beatIsChoosen ? 
+                <AudioPlayer
+                    src={choosenBeat}
+					showJumpControls={false}
+					loop={true}
+					// style={{
+					// 	width: "300px",
+					// }}
+					customVolumeControls={[<RemoveIcon onClick={handleRemoveSample} style={{fontSize:'30px', cursor: 'pointer', color:'grey'}}/>]}
+				/> : null}
+            </div>
 			<div className="beat-done">Done</div>
 
 			<div className="beats">

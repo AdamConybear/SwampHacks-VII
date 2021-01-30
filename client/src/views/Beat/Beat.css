@@ -66,7 +66,8 @@
 .beat-added{
     font-size: 22px;
     margin-bottom: 20px;
-
+    width: 25%;
+    text-align: center;
 }
 
 .beats{
@@ -91,4 +92,29 @@
 .indivBeat{
     display: flex;
     flex-direction: row;
+}
+
+.addSample{
+    background-color: black;
+    width: 20px;
+    height: 10px;
+    /* margin-bottom: 40px;
+    margin-top:20px; */
+    /* margin-left: auto; */
+    /* margin-right: auto; */
+    color: white;
+    font-family: "Nunito", sans-serif;
+    font-weight: lighter;
+    font-size: 12px;
+    text-align:center;
+    line-height: 10px;
+    transition: all 0.2s ease-in-out;
+
+}
+
+.addSample:hover {
+    background-color: #ffc87a;
+    transform: scale(1.05);
+    color: black;
+    cursor: pointer;
 }

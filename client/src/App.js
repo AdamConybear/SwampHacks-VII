@@ -14,10 +14,10 @@ const App = () => {
 		<div>
 			<Switch>
 				<Route exact path="/Connect" component={Connect} />
-        <Route exact path="/Beat" component={Beat} />
-        <Route exact path="/Lyrics" component={Lyrics} />
-        <Route exact path="/VoteLyrics" component={VoteLyrics} />
-        <Route exact path="/VoteBeat" component={VoteBeat} />
+				<Route exact path="/Beat" component={Beat} />
+				<Route exact path="/Lyrics" component={Lyrics} />
+				<Route exact path="/VoteLyrics" component={VoteLyrics} />
+				<Route exact path="/VoteBeat" component={VoteBeat} />
 				<Route exact path="/">
 					<Redirect to="/Home" />
 				</Route>

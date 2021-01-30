@@ -33,6 +33,7 @@
     "nodemon": "^1.18.10",
     "react-audio-player": "^0.14.0",
     "react-countdown": "^2.3.1",
+    "react-h5-audio-player": "^3.5.0",
     "should": "^13.2.3",
     "supertest": "^4.0.2"
   },

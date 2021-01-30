@@ -4,6 +4,8 @@ import Countdown from "react-countdown";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ReactAudioPlayer from "react-audio-player";
 import test from "../../assets/guitarSample.wav";
+import AudioPlayer from "react-h5-audio-player";
+import "react-h5-audio-player/lib/styles.css";
 import "./Beat.css";
 
 const Beat = () => {
@@ -41,7 +43,19 @@ const Beat = () => {
 	};
 
 	const renderBeats = () => {
-		return <ReactAudioPlayer src={test} autoPlay controls />;
+		return (
+			<div style={{ display: "flex", flexDirection: "row" }}>
+				<AudioPlayer
+					src={test}
+					showJumpControls={false}
+					loop={true}
+					// style={{
+					// 	width: "300px",
+					// }}
+					customVolumeControls={[<button>add sample</button>]}
+				/>
+			</div>
+		);
 	};
 
 	return (
@@ -57,7 +71,7 @@ const Beat = () => {
 			<div className="beat-done">Done</div>
 
 			<div className="beats">
-				<div>
+				<div style={{ width: "50%" }}>
 					<div style={{ fontSize: "24px" }} className="indivBeat">
 						Piano
 						<ExpandMoreIcon

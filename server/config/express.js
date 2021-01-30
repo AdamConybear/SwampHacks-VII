@@ -1,18 +1,25 @@
-const path = require('path'),
-    express = require('express'),
-    mongoose = require('mongoose'),
-    morgan = require('morgan'),
-    bodyParser = require('body-parser'),
-    exampleRouter = require('../routes/examples.server.routes');
+const path = require("path"),
+	express = require("express"),
+	mongoose = require("mongoose"),
+	morgan = require("morgan"),
+	bodyParser = require("body-parser"),
+	exampleRouter = require("../routes/examples.server.routes"),
+	dbKey = require("./dev");
 
 module.exports.init = () => {
     /* 
         connect to database
         - reference README for db uri
     */
-    mongoose.connect(process.env.DB_URI || require('./config').db.uri, {
-        useNewUrlParser: true
-    });
+    mongoose
+		.connect(process.env.DB_URI || dbKey.MONGO_URI, {
+			useNewUrlParser: true,
+			useUnifiedTopology: true,
+			useCreateIndex: true,
+		})
+		.then(() => console.log("MongoDB Connected..."))
+		.catch((err) => console.log(err));
+    
     mongoose.set('useCreateIndex', true);
     mongoose.set('useFindAndModify', false);
 

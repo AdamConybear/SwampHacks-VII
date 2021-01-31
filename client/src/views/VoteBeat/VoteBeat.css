@@ -1,0 +1,77 @@
+
+.beatContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.beat-header{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin-bottom: 60px;
+
+}
+
+
+.timer{
+    font-size: 22px;
+    position: absolute;
+    right: 20px;
+    top: 33px;
+}
+
+.title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 42px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.beats{
+    /* display: flex; */
+    /* flex-direction: row; */
+    /* justify-content: space-between; */
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.beat-done {
+    background-color: black;
+    width: 8%;
+    height: 40px;
+    margin-bottom: 40px;
+    margin-top:20px;
+    margin-left: auto;
+    margin-right: auto;
+    color: white;
+    font-family: "Nunito", sans-serif;
+    font-weight: lighter;
+    font-size: 18px;
+    text-align:center;
+    line-height: 40px;
+    transition: all 0.2s ease-in-out;
+}
+
+.beat-done:hover {
+    background-color: #ffc87a;
+    transform: scale(1.05);
+    color: black;
+    cursor: pointer;
+}
+
+.beat-added{
+    font-size: 22px;
+    margin-bottom: 20px;
+    width: 25%;
+    text-align: center;
+}

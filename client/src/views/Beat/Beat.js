@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useRef } from "react";
+import React, { useEffect, useState} from "react";
 import { Redirect } from "react-router-dom";
 import Countdown from "react-countdown";
 // import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -23,6 +23,7 @@ const Beat = () => {
 	const [secondBeat, setSecondBeat] = useState("");
     const [choosenBeat, setChoosenBeat] = useState("");
     const [beatIsChoosen, setBeatIsChoosen] = useState(false);
+    const [playerDone, setplayerDone] = useState(false);
 
 
     const [instrument, setInstrument] = React.useState("");
@@ -85,6 +86,11 @@ const Beat = () => {
         setBeatIsChoosen(false);
         setChoosenBeat("");
     }
+
+    const handleDone = () => {
+        setplayerDone(true); 
+        //update db saying player is done
+    }
         
 	const renderBeats = () => {
 
@@ -114,17 +120,6 @@ const Beat = () => {
         });
     };
     
-    // const handleShowFirstBeat = () => {
-    //     setShowFirstBeat(true);
-    //     setShowSecondBeat(false);
-
-    // }
-    // const handleShowSecondBeat = () => {
-    //     setShowFirstBeat(false);
-    //     setShowSecondBeat(true);
-
-    // }
-
 	return (
 		<div className="beatContainer">
 			<div className="beat-header">
@@ -144,10 +139,10 @@ const Beat = () => {
 					// style={{
 					// 	width: "300px",
 					// }}
-					customVolumeControls={[<RemoveIcon onClick={handleRemoveSample} style={{fontSize:'30px', cursor: 'pointer', color:'grey'}}/>]}
+					customVolumeControls={!playerDone ? [<RemoveIcon onClick={handleRemoveSample} style={{fontSize:'30px', cursor: 'pointer', color:'grey'}}/>]: []}
 				/> : null}
             </div>
-			<div className="beat-done">Done</div>
+			{playerDone ? <p style={{fontSize:'20px'}}>Waiting on other players to finish...</p> : <div className="beat-done" onClick={handleDone}>I'm Done!</div>}
             <ToggleButtonGroup
                 value={instrument}
                 exclusive
@@ -165,26 +160,6 @@ const Beat = () => {
 			<div className="beats">
                 {showFirstBeat ? renderBeats() : null}
                 {showSecondBeat ? renderBeats() : null}
-				{/* <div style={{ width: "50%" }}>
-					<div style={{ fontSize: "24px" }} className="indivBeat">
-						Piano
-						<ExpandMoreIcon
-							onClick={() => setShowFirstBeat(!showFirstBeat)}
-							style={{ fontSize: "30", marginLeft: "4", cursor: "pointer" }}
-						/>
-					</div>
-					<div>{showFirstBeat ? renderBeats() : null}</div>
-				</div>
-				<div>
-					<div style={{ fontSize: "24px" }} className="indivBeat">
-						Guitar
-						<ExpandMoreIcon
-							onClick={() => setShowSecondBeat(!showSecondBeat)}
-							style={{ fontSize: "30", marginLeft: "4", cursor: "pointer" }}
-						/>
-					</div>
-					<div>{showSecondBeat ? renderBeats() : null}</div>
-				</div> */}
 			</div>
 		</div>
 	);

@@ -7,7 +7,8 @@ const path = require("path"),
   crypto = require("crypto"),
   mongoose = require("mongoose"),
   multer = require("multer"),
-  GridFsStorage = require("multer-gridfs-storage");
+  GridFsStorage = require("multer-gridfs-storage"),
+  cors = require("cors");
 
 module.exports.init = () => {
   /* 
@@ -69,6 +70,8 @@ module.exports.init = () => {
 
   // body parsing middleware
   app.use(bodyParser.json());
+
+  app.use(cors());
 
   //router for uploading files to mongodb
   app.post("/api/upload", upload.single("file"), (req, res) => {

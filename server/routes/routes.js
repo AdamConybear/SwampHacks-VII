@@ -2,9 +2,9 @@ const routes = require("../controllers/controller.js"),
   express = require("express"),
   router = express.Router();
 
-router.route("/getSession").get(routes.getSession);
+router.route("/getSession").post(routes.getSession);
 
-router.route("/getPlayer").get(routes.getPlayer);
+router.route("/getPlayer").post(routes.getPlayer);
 
 router.route("/").get(routes.hello);
 

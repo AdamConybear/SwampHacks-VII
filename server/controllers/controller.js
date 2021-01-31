@@ -31,7 +31,7 @@ exports.createSession = function (req, res) {
     lyrics: [],
   }).save();
 
-  res.send(sessionPassword);
+  res.json({ meetingId: sessionPassword });
 };
 
 exports.createPlayer = async function (req, res) {

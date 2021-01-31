@@ -19,7 +19,7 @@ const App = () => {
 				<Route exact path="/VoteLyrics" component={VoteLyrics} />
 				<Route exact path="/VoteBeat" component={VoteBeat} />
 				<Route exact path="/">
-					<Redirect to="/Home" />
+					<Redirect to="/Connect" />
 				</Route>
 				{/* <Route component={NotFound} /> */}
 			</Switch>

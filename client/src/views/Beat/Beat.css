@@ -70,11 +70,31 @@
     text-align: center;
 }
 
-.beats{
+.toggleContainer{
     display: flex;
     flex-direction: row;
+    width: 12%;
     justify-content: space-between;
-    width: 40%;
+    align-items: center;
+}
+.toggle{
+    font-size: 22px;
+    border: 1px solid black;
+    padding: 5px;
+}
+.toggle:hover{
+    cursor: pointer;
+}
+
+.beats{
+    /* display: flex; */
+    /* flex-direction: row; */
+    /* justify-content: space-between; */
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
     margin-top: 30px;
 }
 

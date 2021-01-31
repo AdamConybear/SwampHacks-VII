@@ -1,11 +1,15 @@
 import React, { useEffect, useState,useRef } from "react";
 import { Redirect } from "react-router-dom";
 import Countdown from "react-countdown";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+// import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import ToggleButton from '@material-ui/lab/ToggleButton';
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 // import ReactAudioPlayer from "react-audio-player";
-import test from "../../assets/guitarSample.wav";
+// import test from "../../assets/guitarSamples/guitarSample.wav";
+import guitarSamples from "../../assets/guitarSamples/guitar";
+import synthSamples from "../../assets/synthSamples/synth";
 import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 import "./Beat.css";
@@ -15,16 +19,34 @@ import "./Beat.css";
 const Beat = () => {
     const [showFirstBeat, setShowFirstBeat] = useState(false);
 	const [showSecondBeat, setShowSecondBeat] = useState(false);
-	const [firstBeat, setFirstBeat] = useState("");
+	const [firstBeat, setFirstBeat] = useState([]);
 	const [secondBeat, setSecondBeat] = useState("");
     const [choosenBeat, setChoosenBeat] = useState("");
     const [beatIsChoosen, setBeatIsChoosen] = useState(false);
+
+
+    const [instrument, setInstrument] = React.useState("");
+
+    const handleInstrument = (e, newInstrument) => {
+        setInstrument(newInstrument);
+
+        if(newInstrument === "first"){
+            setShowFirstBeat(true);
+            setShowSecondBeat(false);
+        }else if(newInstrument === "second"){
+            setShowFirstBeat(false);
+            setShowSecondBeat(true);
+        }
+    };
     
-    const player = useRef();
+    // const player = useRef();
 
 	useEffect(() => {
 		//get round from database
-		//based on round # set first and second beat
+        //based on round # set first and second beat
+        // const json = JSON.parse(JSON.stringify(guitarJson));
+        setFirstBeat(synthSamples);
+        setSecondBeat(guitarSamples);
 	}, []);
 
 	const renderer = ({ minutes, seconds, completed }) => {
@@ -49,10 +71,11 @@ const Beat = () => {
 		}
     };
     
-    const handleAddSample = () => {
+    const handleAddSample = (file) => {
         console.log("added beat");
-        console.log(player.current.audio.current.src);
-        setChoosenBeat(player.current.audio.current.src);
+        console.log(file);
+        // console.log(player.current.audio.current.src);
+        setChoosenBeat(file);
         setBeatIsChoosen(true);
 
     }
@@ -64,21 +87,43 @@ const Beat = () => {
     }
         
 	const renderBeats = () => {
-		return (
-			<div style={{ display: "flex", flexDirection: "row" }}>
-				<AudioPlayer
-                    src={test}
-                    ref = {player}
-					showJumpControls={false}
-					loop={true}
-					// style={{
-					// 	width: "300px",
-					// }}
-					customVolumeControls={[<AddIcon onClick={handleAddSample} style={{fontSize:'30px', cursor: 'pointer', color:'grey'}}/>]}
-				/>
-			</div>
-		);
-	};
+
+        let displayArr = [];
+        if(showFirstBeat){
+            displayArr = firstBeat;
+        }else if(showSecondBeat){
+            displayArr = secondBeat;
+        }
+
+
+		return displayArr.map((file)=>{
+
+            // console.log(file.src);
+            return <AudioPlayer
+                key={file}
+                src={file}
+                // ref = {player}
+                showJumpControls={false}
+                loop={true}
+                style={{
+                    width: "300px",
+                    margin:'10px'
+                }}
+                customVolumeControls={[<AddIcon onClick={()=>handleAddSample(file)} style={{fontSize:'30px', cursor: 'pointer', color:'grey'}}/>]}
+            />
+        });
+    };
+    
+    // const handleShowFirstBeat = () => {
+    //     setShowFirstBeat(true);
+    //     setShowSecondBeat(false);
+
+    // }
+    // const handleShowSecondBeat = () => {
+    //     setShowFirstBeat(false);
+    //     setShowSecondBeat(true);
+
+    // }
 
 	return (
 		<div className="beatContainer">
@@ -103,9 +148,24 @@ const Beat = () => {
 				/> : null}
             </div>
 			<div className="beat-done">Done</div>
+            <ToggleButtonGroup
+                value={instrument}
+                exclusive
+                onChange={handleInstrument}
+                aria-label="text alignment"
+            >
+                 <ToggleButton value="first" aria-label="left aligned">
+                    Synth
+                </ToggleButton>
+                <ToggleButton value="second" aria-label="right aligned">
+                    Guitar
+                </ToggleButton>
+            </ToggleButtonGroup>
 
 			<div className="beats">
-				<div style={{ width: "50%" }}>
+                {showFirstBeat ? renderBeats() : null}
+                {showSecondBeat ? renderBeats() : null}
+				{/* <div style={{ width: "50%" }}>
 					<div style={{ fontSize: "24px" }} className="indivBeat">
 						Piano
 						<ExpandMoreIcon
@@ -124,7 +184,7 @@ const Beat = () => {
 						/>
 					</div>
 					<div>{showSecondBeat ? renderBeats() : null}</div>
-				</div>
+				</div> */}
 			</div>
 		</div>
 	);
